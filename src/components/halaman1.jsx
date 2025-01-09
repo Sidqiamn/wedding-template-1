@@ -16,11 +16,15 @@ const Halaman1 = () => {
             alt="halaman1logo"
             className="mb-4 h-32 w-40 translate-y-5"
           />
-          <p className="text-customGreen text-3xl ">Pernikahan</p>
-          <p className="font-allura text-customGreen text-5xl">Sidqi & Aman</p>
+          <p className="text-customGreen text-2xl font-lora ">Pernikahan</p>
+          <p className="font-allura text-customGreen text-4xl">Sidqi & Aman</p>
           <div className="flex justify-center flex-col items-center gap-3">
-            <p className=" text-customGreen">Special Invite To</p>
-            <p className="text-customGreen">Keluarga Besar Hampor</p>
+            <p className=" text-customGreen text-xl font-lora">
+              Special Invite To
+            </p>
+            <p className="text-customGreen text-xl font-lora">
+              Keluarga Besar Hampor
+            </p>
           </div>
           <div className="text-base rounded justify-center items-center bg-customGreen px-2 py-1 flex">
             <img src={logoletter} className="h-8 w-8" alt="" />

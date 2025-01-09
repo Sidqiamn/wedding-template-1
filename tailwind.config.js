@@ -8,6 +8,7 @@ export default {
     },
     fontFamily: {
       allura: ["Allura", "cursive"],
+      lora: ["Lora", "serif"],
     },
     extend: {},
   },
