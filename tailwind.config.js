@@ -2,15 +2,16 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    colors: {
-      customGreen: "#978766",
-      white: "#ffffff",
+    extend: {
+      colors: {
+        customGreen: "#978766",
+        white: "#ffffff", // boleh ditambahkan meskipun sudah default
+      },
+      fontFamily: {
+        allura: ["Allura", "cursive"],
+        lora: ["Lora", "serif"],
+      },
     },
-    fontFamily: {
-      allura: ["Allura", "cursive"],
-      lora: ["Lora", "serif"],
-    },
-    extend: {},
   },
   plugins: [],
 };
