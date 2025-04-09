@@ -24,7 +24,9 @@ const Halaman1 = () => {
             <p className=" text-customGreen text-xl font-lora">
               Special Invite To
             </p>
-            <p className="text-customGreen text-xl font-lora">cipaw</p>
+            <p className="text-customGreen text-xl font-lora">
+              Keluarga besar ujang
+            </p>
           </div>
           <div className="text-base rounded justify-center items-center bg-customGreen px-2 py-1 flex">
             <img src={logoletter} className="h-8 w-8" alt="" />
