@@ -25,7 +25,7 @@ const Halaman2 = () => {
     seconds: "00",
   });
   const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
-  const lagu = "/assets/ShaneFilan.mp3";
+  const lagu = "/assets/shanefilan.mp3";
   function ubahgambar(params) {
     setGambarSekarang(params);
   }
