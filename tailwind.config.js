@@ -10,6 +10,8 @@ export default {
       fontFamily: {
         allura: ["Allura", "cursive"],
         lora: ["Lora", "serif"],
+        bebas: ["Bebas Neue", "cursive"],
+        playfair: ["Playfair Display", "serif"],
       },
     },
   },

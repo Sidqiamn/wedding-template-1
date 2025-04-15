@@ -6,9 +6,11 @@ import imagecouple4 from "../assets/imagecouple4.jpg";
 import imagesolo1 from "../assets/imagesolo1.jpg";
 import landscape from "../assets/landscape.jpg";
 import solo2 from "../assets/solo2.jpg";
-import image2 from "../assets/image2.jpeg";
-import image3 from "../assets/image3.jpeg";
+import Snowfall from "react-snowfall";
+import lagu from "../assets/Shanefilan.mp3"; // jika disimpan di assets
+import igblack from "../assets/igblack.png";
 import ig from "../assets/ig.png";
+import wa from "../assets/wa.png";
 import image4 from "../assets/imag4.jpg";
 import image5 from "../assets/image5.png";
 
@@ -27,7 +29,25 @@ const Halaman2 = () => {
   function ubahgambar(params) {
     setGambarSekarang(params);
   }
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio] = useState(
+    typeof Audio !== "undefined" ? new Audio(lagu) : null
+  );
 
+  useEffect(() => {
+    if (!audio) return;
+
+    isPlaying ? audio.play() : audio.pause();
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (!audio) return;
+
+    // Pause lagu saat user keluar dari halaman
+    return () => {
+      audio.pause();
+    };
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
@@ -60,6 +80,20 @@ const Halaman2 = () => {
 
   return (
     <>
+      <Snowfall
+        snowflakeCount={50}
+        color="#a3e2f2"
+        speed={[0.5, 1.5]}
+        wind={[-0.5, 0.5]}
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          zIndex: 9999,
+          pointerEvents: "none",
+        }}
+      />
+
       <div className="relative">
         <img src={imagecouple} alt="" className="w-full h-auto" />
         <div className="bg-black bg-opacity-15 absolute inset-0 "></div>
@@ -90,49 +124,58 @@ const Halaman2 = () => {
             </div>
           </div>
           <div className="text-center text-xs">
-            "Cinta itu adalah perasaan yang mesti ada pada tiap-tiap diri
-            manusia, ia laksana setetes embun yang turun dari langit, bersih dan
-            suci"
+            <q>
+              Cinta itu adalah perasaan yang mesti ada pada tiap-tiap diri
+              manusia, ia laksana setetes embun yang turun dari langit, bersih
+              dan suci
+            </q>
+            <p className="mt-2 font-bold">- Buya Hamka -</p>
           </div>
         </div>
       </div>
-      <div className="mt-4 mx-5 relative">
+      <div className="mt-4 mx-3 relative">
         <img src={imagesolo1} alt="" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
-            <h1 className="text-4xl">aman</h1>
+            <h1 className="text-4xl font-lora">Sidqi</h1>
             <h2 className="text-lg">Sidqi Amanullah</h2>
-            <div className="flex items-center gap-2">
-              <img src={ig} alt="" className="w-5 h-5" />
+            <div className="flex items-center bg-opacity-30 p-2 bg-gray-500 gap-2">
+              <img src={igblack} alt="" className="w-5 h-5" />
               <p>@sidqiaman</p>
             </div>
             <hr className="w-full border-white/30" />
-            <p>Putra dari bapak lord thanos dan queen bumi</p>
+            <p className="italic">
+              Putra dari bapak lord thanos dan queen bumi
+            </p>
           </div>
         </div>
       </div>
-      <div className="mt-4 mx-5 relative">
+      <div className="mt-4 mx-3 relative">
         <img src={solo2} alt="" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
-            <h1 className="text-4xl">Aman</h1>
+            <h1 className="text-4xl font-lora">Aman</h1>
             <h2 className="text-lg">Sidqia Amanull</h2>
-            <div className="flex items-center gap-2">
-              <img src={ig} alt="" className="w-5 h-5" />
+            <div className="flex items-center gap-2 bg-gray-400 bg-opacity-30 p-2">
+              <img src={igblack} alt="" className="w-5 h-5" />
               <p>@amansidqi</p>
             </div>
             <hr className="w-full border-white/30" />
-            <p>Putra dari bapak lord thanos dan queen bumi</p>
+            <p className="italic">
+              Putra dari bapak lord thanos dan queen bumi
+            </p>
           </div>
         </div>
       </div>
       <div>
         <p className="text-center mt-10 mx-5 text-xs">
-          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
-          pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung
-          merasa tenteram kepadanya. Dan Dia menjadikan di antaramu rasa kasih
-          dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat
-          tanda-tanda kebesaran Allah bagi kaum yang berpikir"
+          <q>
+            Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
+            pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung
+            merasa tenteram kepadanya. Dan Dia menjadikan di antaramu rasa kasih
+            dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat
+            tanda-tanda kebesaran Allah bagi kaum yang berpikir
+          </q>
         </p>
         <div className="flex items-center justify-center gap-4 mt-5">
           <hr className="w-20 border-t border-gray-400" />
@@ -146,10 +189,10 @@ const Halaman2 = () => {
         <img src={image4} alt="" className="opacity-30" />
 
         <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
-          <p className="text-4xl font-light">
-            Save <p className="inline font-allura">The</p> Date
+          <p className="text-4xl font-extralight ">
+            Save <p className="inline font-allura text-gray-500">The</p> Date
           </p>
-          <p className="text-xs text-center mt-10">
+          <p className="text-xs text-center mt-7">
             Dengan Memohon rahmat dan ridho Allah SWT, Kami Mengundang
             Bapak/Ibu/Saudara/i, untuk menghindari acara pernikahan Kami.
             insyaAllah kami akan menyelenggarakan acara pernikahan :{" "}
@@ -160,8 +203,10 @@ const Halaman2 = () => {
         </div>
       </div>
       <div className="flex text-xl flex-col mt-10 justify-center items-center gap-8">
-        <h1>Wedding Event</h1>
-        <h1 className="text-gray-500 font-bold">Akad Nikah</h1>
+        <h1 className="font-playfair text-2xl">Wedding Event</h1>
+        <h1 className="text-gray-500 font-bold tracking-wider font-lora">
+          Akad Nikah
+        </h1>
         <div className="text-base text-center">
           <h3 className="italic font-semibold">Minggu, 12 januari 2030</h3>
           <h4>09.00 - Selesai</h4>
@@ -172,11 +217,12 @@ const Halaman2 = () => {
           </h3>
           <h4>Perum Griya Bumi Praja, Kab. garut</h4>
         </div>
-        <div className="text-base text-center bg-slate-300 p-2 ">
-          <p>Google Maps</p>
+        <div className="text-base text-center border border-black bg-slate-300 p-2 ">
+          <p className="">Google Maps</p>
         </div>
-        <div className="bg-gray-300 text-white px-5 pt-5 flex flex-col  items-center  w-full ">
-          <h1>Galeri</h1>
+        <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col  items-center  w-full ">
+          <h1 className="font-bebas text-3xl tracking-wider">Galeri</h1>
+
           <h2>Sidqi & Aman</h2>
           <div className="bg-white p-4 pb-7 mt-5">
             <img src={landscape} alt="" />
@@ -210,7 +256,7 @@ const Halaman2 = () => {
             <h1>RSVP & WISHES</h1>
             <h3 className="text-base">Konfirmasi Kehadiran & Ucapan Selamat</h3>
           </div>
-          <div className="mt-10 p-2 text-center bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4">
+          <div className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4">
             <p>44 Comments</p>
             <div className="flex flex-row gap-5 mt-4">
               <div className="flex  w-20 border rounded-lg  text-sm border-white justify-center flex-col items-center">
@@ -297,12 +343,12 @@ const Halaman2 = () => {
             untuk mengirimkan kado/hadiah.
           </h2>
           <h3 className="text-base">082329392901</h3>
-          <button className="bg-gray-400 p-2 px-4 text-xs text-white">
+          <button className="bg-gray-400 p-2 px-4 text-xs border border-black text-white">
             Bank Dana
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
           <h3 className="text-base">1444111112</h3>
-          <button className="bg-gray-400 p-2 px-4 text-xs text-white">
+          <button className="bg-gray-400 p-2 px-4 text-xs border border-black text-white">
             Bank BCA
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
@@ -310,20 +356,33 @@ const Halaman2 = () => {
         <div className="relative flex justify-center items-center flex-col">
           <img className="opacity-70" src={imagecouple2} alt="" />
           <div className="absolute -translate-y-20  w-screen px-10">
-            <div className="border text-center bg-opacity-50 bg-black text-white border-white border-2 py-20  p-2 rounded-t-full">
-              <p className="opacity-100 ">Terima Kasih</p>
-              <p className="opacity-100 font-bold">Kami yang berbahagia</p>
-              <p>Kedua Mempelai & Keluarga Besar</p>
+            <div className=" text-center bg-opacity-50 bg-black text-white border-white border-4 py-20  p-2 rounded-t-full">
+              <p className="opacity-100 font-playfair tracking-wider ">
+                Terima Kasih
+              </p>
+              <p className="opacity-100 tracking-widest text-2xl mt-6 mb-6 font-allura">
+                Kami yang berbahagia
+              </p>
+              <p className="text-base">Kedua Mempelai & Keluarga Besar</p>
             </div>
           </div>
           <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500  flex justify-center items-center flex-col bottom-0">
             <img src="" alt="" />
             <p className="italic">Design by qi tech</p>
-            <div>
+            <div className="flex gap-3">
               <img src={ig} className="w-6" alt="" />
+              <img src={wa} className="w-6" alt="" />
             </div>
           </div>
         </div>
+      </div>
+      <div className="fixed bottom-5 right-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
+        <button
+          onClick={() => setIsPlaying(!isPlaying)}
+          className="text-sm bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
       </div>
     </>
   );
