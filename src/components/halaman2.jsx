@@ -7,7 +7,7 @@ import imagesolo1 from "../assets/imagesolo1.jpg";
 import landscape from "../assets/landscape.jpg";
 import solo2 from "../assets/solo2.jpg";
 import Snowfall from "react-snowfall";
-import lagu from "../assets/Shanefilan.mp3"; // jika disimpan di assets
+
 import igblack from "../assets/igblack.png";
 import ig from "../assets/ig.png";
 import wa from "../assets/wa.png";
@@ -25,7 +25,7 @@ const Halaman2 = () => {
     seconds: "00",
   });
   const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
-
+  const lagu = "/assets/ShaneFilan.mp3";
   function ubahgambar(params) {
     setGambarSekarang(params);
   }
