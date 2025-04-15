@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import image1 from "../assets/image1.jpeg";
+import imagecouple from "../assets/imagecouple.jpg";
+import imagecouple2 from "../assets/imagecouple2.jpg";
+import imagecouple3 from "../assets/imagecouple3.jpg";
+import imagecouple4 from "../assets/imagecouple4.jpg";
+import imagesolo1 from "../assets/imagesolo1.jpg";
+import landscape from "../assets/landscape.jpg";
+import solo2 from "../assets/solo2.jpg";
 import image2 from "../assets/image2.jpeg";
 import image3 from "../assets/image3.jpeg";
 import ig from "../assets/ig.png";
@@ -16,6 +22,11 @@ const Halaman2 = () => {
     minutes: "00",
     seconds: "00",
   });
+  const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
+
+  function ubahgambar(params) {
+    setGambarSekarang(params);
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,7 +61,7 @@ const Halaman2 = () => {
   return (
     <>
       <div className="relative">
-        <img src={image1} alt="" className="w-full h-auto" />
+        <img src={imagecouple} alt="" className="w-full h-auto" />
         <div className="bg-black bg-opacity-15 absolute inset-0 "></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white  space-y-4 p-6 translate-y-24">
           <p className="text-xl">The Wedding of</p>
@@ -86,10 +97,10 @@ const Halaman2 = () => {
         </div>
       </div>
       <div className="mt-4 mx-5 relative">
-        <img src={image2} alt="" className="w-full h-auto" />
+        <img src={imagesolo1} alt="" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
-          <div className="bg-gray-300 bg-opacity-40 text-white px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
-            <h1 className="text-4xl">Sidqi</h1>
+          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
+            <h1 className="text-4xl">aman</h1>
             <h2 className="text-lg">Sidqi Amanullah</h2>
             <div className="flex items-center gap-2">
               <img src={ig} alt="" className="w-5 h-5" />
@@ -101,9 +112,9 @@ const Halaman2 = () => {
         </div>
       </div>
       <div className="mt-4 mx-5 relative">
-        <img src={image3} alt="" className="w-full h-auto" />
+        <img src={solo2} alt="" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
-          <div className="bg-gray-300 bg-opacity-40 text-white px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
+          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
             <h1 className="text-4xl">Aman</h1>
             <h2 className="text-lg">Sidqia Amanull</h2>
             <div className="flex items-center gap-2">
@@ -145,6 +156,172 @@ const Halaman2 = () => {
           </p>
           <div className="mx-20 mt-6">
             <img src={image5} alt="" />
+          </div>
+        </div>
+      </div>
+      <div className="flex text-xl flex-col mt-10 justify-center items-center gap-8">
+        <h1>Wedding Event</h1>
+        <h1 className="text-gray-500 font-bold">Akad Nikah</h1>
+        <div className="text-base text-center">
+          <h3 className="italic font-semibold">Minggu, 12 januari 2030</h3>
+          <h4>09.00 - Selesai</h4>
+        </div>
+        <div className="text-base text-center">
+          <h3 className="bold italic font-semibold">
+            Kediaman Mempelai Wanita
+          </h3>
+          <h4>Perum Griya Bumi Praja, Kab. garut</h4>
+        </div>
+        <div className="text-base text-center bg-slate-300 p-2 ">
+          <p>Google Maps</p>
+        </div>
+        <div className="bg-gray-300 text-white px-5 pt-5 flex flex-col  items-center  w-full ">
+          <h1>Galeri</h1>
+          <h2>Sidqi & Aman</h2>
+          <div className="bg-white p-4 pb-7 mt-5">
+            <img src={landscape} alt="" />
+          </div>
+          <div className="bg-white  p-2 mt-5">
+            <img src={gambarsekarang} alt="" /> {/* Ubah di sini */}
+            <div className="gap-2 grid grid-cols-3 pt-2">
+              <img
+                onClick={() => ubahgambar(imagecouple3)}
+                className="basis-1/3 w-full h-auto object-cover"
+                src={imagecouple3}
+                alt=""
+              />
+              <img
+                onClick={() => ubahgambar(imagecouple4)}
+                className="basis-1/3 w-full h-auto object-cover"
+                src={imagecouple4}
+                alt=""
+              />
+              <img
+                onClick={() => ubahgambar(imagecouple2)}
+                className="basis-1/3 w-full h-auto object-cover"
+                src={imagecouple2}
+                alt=""
+              />
+            </div>
+          </div>
+          <div className="h-0.5 w-full bg-white mt-10"></div>
+
+          <div className="mt-10 text-center">
+            <h1>RSVP & WISHES</h1>
+            <h3 className="text-base">Konfirmasi Kehadiran & Ucapan Selamat</h3>
+          </div>
+          <div className="mt-10 p-2 text-center bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4">
+            <p>44 Comments</p>
+            <div className="flex flex-row gap-5 mt-4">
+              <div className="flex  w-20 border rounded-lg  text-sm border-white justify-center flex-col items-center">
+                <h1 className="font-bold">16</h1>
+                <h2>Hadir</h2>
+              </div>
+              <div className="flex w-20 border  text-base rounded-lg border-white justify-center flex-col items-center">
+                <h1 className="font-bold">16</h1>
+                <h2 className="text-xs">tidak Hadir</h2>
+              </div>
+              <div className="flex w-20 border  text-base rounded-lg border-white justify-center flex-col items-center">
+                <h1 className="font-bold">16</h1>
+                <h2 className="text-xs">masih ragu</h2>
+              </div>
+            </div>
+            <div className="h-0.5 w-full bg-white mt-10"></div>
+
+            <div>
+              <form action="">
+                <input
+                  className="mt-4 p-2 w-full text-base border border-gray-300 rounded-md"
+                  type="text"
+                  placeholder="Name"
+                />
+                <textarea
+                  className="mt-4 p-2 h-20 w-full border text-base border-gray-300 rounded-md resize-none"
+                  placeholder="Ucapan"
+                />
+                <select
+                  className="mt-4 p-2 text-black text- w-full text-base border border-gray-300 rounded-md"
+                  name="status"
+                >
+                  <option className="text-xs" value="">
+                    Pilih status kehadiran
+                  </option>
+                  <option value="hadir" className="text-xs">
+                    Hadir
+                  </option>
+                  <option value="tidak_hadir" className="text-xs">
+                    Tidak Hadir
+                  </option>
+                  <option value="masih_ragu" className="text-xs">
+                    Masih Ragu
+                  </option>
+                </select>
+                <button
+                  type="submit"
+                  className="mt-4 p-1 font-bold text-lg rounded-md w-full bg-gray-400 text-white"
+                >
+                  Kirim
+                </button>
+              </form>
+              <div className="h-0.5 w-full bg-white mt-10"></div>
+              <div id="comments">
+                <div className="flex gap-1 mb-5 flex-col text-sm justify-start items-start pl-7 pt-4">
+                  <h1 className="font-bold">Sidqi</h1>
+                  <p>Masya Allah selamat yang berbahagia</p>
+                  <hr />
+                </div>
+                <hr />
+                <div className="flex mb-5 gap-1 flex-col text-sm justify-start items-start pl-7 pt-4">
+                  <h1 className="font-bold">Aman</h1>
+                  <p className="text-start">
+                    bagus banget semua yang berbahagia datang yak semoga lancar
+                    selalu
+                  </p>
+                </div>
+                <hr />
+              </div>
+              <br />
+            </div>
+          </div>
+          <br />
+          <br />
+        </div>
+        <div
+          id="Gift"
+          className="flex gap-5 mb-10 mx-4 justify-center items-center flex-col"
+        >
+          <h1>WEDDING GIFT </h1>
+          <h2 className="text-xs text-center">
+            Mungkin karena jarak, waktu ataupun keaadaan yang menghalangi untuk
+            itu hadir dalam moment bahagia kami, Silahkan klik tombol dibawah
+            untuk mengirimkan kado/hadiah.
+          </h2>
+          <h3 className="text-base">082329392901</h3>
+          <button className="bg-gray-400 p-2 px-4 text-xs text-white">
+            Bank Dana
+          </button>
+          <p className="text-xs">A/n. Sidqi Ganteng</p>
+          <h3 className="text-base">1444111112</h3>
+          <button className="bg-gray-400 p-2 px-4 text-xs text-white">
+            Bank BCA
+          </button>
+          <p className="text-xs">A/n. Sidqi Ganteng</p>
+        </div>
+        <div className="relative flex justify-center items-center flex-col">
+          <img className="opacity-70" src={imagecouple2} alt="" />
+          <div className="absolute -translate-y-20  w-screen px-10">
+            <div className="border text-center bg-opacity-50 bg-black text-white border-white border-2 py-20  p-2 rounded-t-full">
+              <p className="opacity-100 ">Terima Kasih</p>
+              <p className="opacity-100 font-bold">Kami yang berbahagia</p>
+              <p>Kedua Mempelai & Keluarga Besar</p>
+            </div>
+          </div>
+          <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500  flex justify-center items-center flex-col bottom-0">
+            <img src="" alt="" />
+            <p className="italic">Design by qi tech</p>
+            <div>
+              <img src={ig} className="w-6" alt="" />
+            </div>
           </div>
         </div>
       </div>
