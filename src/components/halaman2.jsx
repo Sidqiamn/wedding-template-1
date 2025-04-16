@@ -12,11 +12,18 @@ import ig from "../assets/ig.png";
 import wa from "../assets/wa.png";
 import image4 from "../assets/imag4.jpg";
 import image5 from "../assets/image5.png";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Halaman2 = () => {
   // 🎯 Target waktu (ubah sesuai kebutuhanmu)
   const targetDate = new Date("2025-06-01T09:00:00");
-
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // durasi animasi (ms)
+      once: true, // hanya jalan sekali saat muncul
+    });
+  }, []);
   const [timeLeft, setTimeLeft] = useState({
     days: "00",
     hours: "00",
@@ -149,7 +156,7 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-      <div className="mt-4 mx-3 relative">
+      <div className="mt-4 mx-3 relative" data-aos="zoom-in">
         <img src={solo2} alt="" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
@@ -166,7 +173,7 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div data-aos="fade-up">
         <p className="text-center mt-10 mx-5 text-xs">
           <q>
             Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
@@ -184,7 +191,7 @@ const Halaman2 = () => {
           <hr className="w-20 border-t border-gray-400" />
         </div>
       </div>
-      <div className="mt-10 relative">
+      <div className="mt-10 relative" data-aos="zoom-in-left">
         <img src={image4} alt="" className="opacity-30" />
 
         <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
@@ -201,7 +208,10 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-      <div className="flex text-xl flex-col mt-10 justify-center items-center gap-8">
+      <div
+        className="flex text-xl flex-col mt-10 justify-center items-center gap-8"
+        data-aos="fade-up"
+      >
         <h1 className="font-playfair text-2xl">Wedding Event</h1>
         <h1 className="text-gray-500 font-bold tracking-wider font-lora">
           Akad Nikah
@@ -223,10 +233,10 @@ const Halaman2 = () => {
           <h1 className="font-bebas text-3xl tracking-wider">Galeri</h1>
 
           <h2>Sidqi & Aman</h2>
-          <div className="bg-white p-4 pb-7 mt-5">
+          <div className="bg-white p-4 pb-7 mt-5" data-aos="fade-left">
             <img src={landscape} alt="" />
           </div>
-          <div className="bg-white  p-2 mt-5">
+          <div className="bg-white  p-2 mt-5" data-aos="fade-up">
             <img src={gambarsekarang} alt="" /> {/* Ubah di sini */}
             <div className="gap-2 grid grid-cols-3 pt-2">
               <img
@@ -255,7 +265,10 @@ const Halaman2 = () => {
             <h1>RSVP & WISHES</h1>
             <h3 className="text-base">Konfirmasi Kehadiran & Ucapan Selamat</h3>
           </div>
-          <div className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4">
+          <div
+            data-aos="zoom-in"
+            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4"
+          >
             <p>44 Comments</p>
             <div className="flex flex-row gap-5 mt-4">
               <div className="flex  w-20 border rounded-lg  text-sm border-white justify-center flex-col items-center">
@@ -332,6 +345,7 @@ const Halaman2 = () => {
           <br />
         </div>
         <div
+          data-aos="zoom-out"
           id="Gift"
           className="flex gap-5 mb-10 mx-4 justify-center items-center flex-col"
         >
@@ -352,7 +366,10 @@ const Halaman2 = () => {
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
         </div>
-        <div className="relative flex justify-center items-center flex-col">
+        <div
+          className="relative flex justify-center items-center flex-col"
+          data-aos="fade-in"
+        >
           <img className="opacity-70" src={imagecouple2} alt="" />
           <div className="absolute -translate-y-20  w-screen px-10">
             <div className=" text-center bg-opacity-50 bg-black text-white border-white border-4 py-20  p-2 rounded-t-full">
