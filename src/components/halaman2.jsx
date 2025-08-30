@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
 import imagecouple from "../assets/imagecouple.jpg";
 import imagecouple2 from "../assets/imagecouple2.jpg";
 import imagecouple3 from "../assets/imagecouple3.jpg";
@@ -18,71 +17,33 @@ import "aos/dist/aos.css";
 import { db } from "../firebase";
 import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import sanitizeHtml from "sanitize-html";
-
 const Halaman2 = () => {
-  const targetDate = new Date("2025-09-01T09:00:00");
-  const [isLoading, setIsLoading] = useState(true);
-  const [timeLeft, setTimeLeft] = useState({
-    days: "00",
-    hours: "00",
-    minutes: "00",
-    seconds: "00",
-  });
-  const [comments, setComments] = useState([]);
-  const [form, setForm] = useState({
-    name: "",
-    message: "",
-    status: "",
-  });
-  const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
-  const lagu = "/assets/shanefilan.mp3";
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [audio] = useState(
-    typeof Audio !== "undefined" ? new Audio(lagu) : null
-  );
-
-  // Preload gambar
+  // Target waktu untuk countdown
+  const targetDate = new Date("2025-09-01T09:00:00"); // Inisialisasi AOS untuk animasi
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
-
-    const images = [
-      imagecouple,
-      imagecouple2,
-      imagecouple3,
-      imagecouple4,
-      imagesolo1,
-      landscape,
-      solo2,
-      igblack,
-      ig,
-      wa,
-      image4,
-      image5,
-    ];
-
-    const preloadImage = (src) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => resolve();
-        img.onerror = () => reject();
-      });
-    };
-
-    Promise.all(images.map((src) => preloadImage(src)))
-      .then(() => {
-        setIsLoading(false); // Semua gambar selesai dimuat
-      })
-      .catch((err) => {
-        console.error("Gagal memuat gambar:", err);
-        setIsLoading(false); // Tetap lanjut meski gagal
-      });
-  }, []);
-
-  // Mengambil komentar dari Firebase
+  }, []); // State untuk countdown
+  const [timeLeft, setTimeLeft] = useState({
+    days: "00",
+    hours: "00",
+    minutes: "00",
+    seconds: "00",
+  }); // State untuk komentar
+  const [comments, setComments] = useState([]);
+  const [form, setForm] = useState({
+    name: "",
+    message: "",
+    status: "",
+  }); // State untuk galeri dan audio
+  const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
+  const lagu = "/assets/shanefilan.mp3";
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [audio] = useState(
+    typeof Audio !== "undefined" ? new Audio(lagu) : null
+  ); // Mengambil komentar secara real-time
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "comments-09"),
@@ -98,55 +59,8 @@ const Halaman2 = () => {
         alert("Terjadi kesalahan saat memuat komentar.");
       }
     );
-
     return () => unsubscribe();
-  }, []);
-
-  // Logika countdown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        return;
-      }
-
-      const days = String(
-        Math.floor(difference / (1000 * 60 * 60 * 24))
-      ).padStart(2, "0");
-      const hours = String(
-        Math.floor((difference / (1000 * 60 * 60)) % 24)
-      ).padStart(2, "0");
-      const minutes = String(
-        Math.floor((difference / 1000 / 60) % 60)
-      ).padStart(2, "0");
-      const seconds = String(Math.floor((difference / 1000) % 60)).padStart(
-        2,
-        "0"
-      );
-
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  // Mengontrol audio
-  useEffect(() => {
-    if (!audio) return;
-    isPlaying ? audio.play() : audio.pause();
-  }, [isPlaying]);
-
-  useEffect(() => {
-    if (!audio) return;
-    return () => {
-      audio.pause();
-    };
-  }, [audio]);
-
-  // Mengirim komentar
+  }, []); // Mengirim komentar
   const handleSubmit = async (e) => {
     e.preventDefault();
     const sanitizedForm = {
@@ -183,25 +97,50 @@ const Halaman2 = () => {
       console.error("Gagal mengirim komentar:", err);
       alert("Gagal mengirim komentar. Silakan coba lagi.");
     }
-  };
-
-  // Fungsi untuk mengubah gambar galeri
+  }; // Fungsi untuk mengubah gambar galeri
   function ubahgambar(params) {
     setGambarSekarang(params);
-  }
+  } // Mengontrol pemutaran audio
+  useEffect(() => {
+    if (!audio) return;
+    isPlaying ? audio.play() : audio.pause();
+  }, [isPlaying]);
+  useEffect(() => {
+    if (!audio) return;
+    return () => {
+      audio.pause();
+    };
+  }, [audio]); // Logika countdown
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
+      if (difference <= 0) {
+        clearInterval(interval);
+        return;
+      }
 
-  // Tampilkan loading jika masih memuat
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-black">
-        <ClipLoader color="#36d7b7" size={50} />
-      </div>
-    );
-  }
+      const days = String(
+        Math.floor(difference / (1000 * 60 * 60 * 24))
+      ).padStart(2, "0");
+      const hours = String(
+        Math.floor((difference / (1000 * 60 * 60)) % 24)
+      ).padStart(2, "0");
+      const minutes = String(
+        Math.floor((difference / 1000 / 60) % 60)
+      ).padStart(2, "0");
+      const seconds = String(Math.floor((difference / 1000) % 60)).padStart(
+        2,
+        "0"
+      );
 
-  // Konten utama setelah loading selesai
+      setTimeLeft({ days, hours, minutes, seconds });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
   return (
-    <div className="max-w-full overflow-x-hidden">
+    <>
       <Snowfall
         snowflakeCount={50}
         color="#a3e2f2"
@@ -209,19 +148,14 @@ const Halaman2 = () => {
         wind={[-0.5, 0.5]}
         style={{
           position: "fixed",
-          width: "100%",
+          width: "100vw",
           height: "100vh",
           zIndex: 9999,
           pointerEvents: "none",
         }}
-      />
-
+      />{" "}
       <div className="relative">
-        <img
-          src={imagecouple}
-          alt="Couple"
-          className="w-full h-auto max-w-full"
-        />
+        <img src={imagecouple} alt="Couple" className="w-full h-auto" />
         <div className="bg-black bg-opacity-15 absolute inset-0"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-4 p-6 translate-y-24">
           <p className="text-xl">The Wedding of</p>
@@ -259,13 +193,8 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div className="mt-4 mx-3 relative">
-        <img
-          src={imagesolo1}
-          alt="Solo 1"
-          className="w-full h-auto max-w-full"
-        />
+        <img src={imagesolo1} alt="Solo 1" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Sidqi</h1>
@@ -281,9 +210,8 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div className="mt-4 mx-3 relative" data-aos="zoom-in">
-        <img src={solo2} alt="Solo 2" className="w-full h-auto max-w-full" />
+        <img src={solo2} alt="Solo 2" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Aman</h1>
@@ -299,7 +227,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div data-aos="fade-up">
         <p className="text-center mt-10 mx-5 text-xs">
           <q>
@@ -318,7 +245,6 @@ const Halaman2 = () => {
           <hr className="w-20 border-t border-gray-400" />
         </div>
       </div>
-
       <div className="mt-10 relative" data-aos="zoom-in-left">
         <img src={image4} alt="Image 4" className="opacity-30" />
         <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
@@ -335,7 +261,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div
         className="flex text-xl flex-col mt-10 justify-center items-center gap-8"
         data-aos="fade-up"
@@ -366,22 +291,22 @@ const Halaman2 = () => {
           </div>
           <div className="bg-white p-2 mt-5" data-aos="fade-up">
             <img src={gambarsekarang} alt="Current Image" />
-            <div className="gap-2 grid grid-cols-3 pt-2 max-w-full overflow-x-hidden">
+            <div className="gap-2 grid grid-cols-3 pt-2">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
-                className="w-full h-auto object-cover"
+                className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple3}
                 alt="Couple 3"
               />
               <img
                 onClick={() => ubahgambar(imagecouple4)}
-                className="w-full h-auto object-cover"
+                className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple4}
                 alt="Couple 4"
               />
               <img
                 onClick={() => ubahgambar(imagecouple2)}
-                className="w-full h-auto object-cover"
+                className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple2}
                 alt="Couple 2"
               />
@@ -395,7 +320,7 @@ const Halaman2 = () => {
           </div>
           <div
             data-aos="zoom-in"
-            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border-white border-4"
+            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center  border-white border-4"
           >
             <p>{comments.length} Comments</p>
             <div className="flex flex-row gap-5 mt-4">
@@ -512,7 +437,7 @@ const Halaman2 = () => {
           data-aos="fade-in"
         >
           <img className="opacity-70" src={imagecouple2} alt="Couple 2" />
-          <div className="absolute -translate-y-20 w-full px-10">
+          <div className="absolute -translate-y-20 w-screen px-10">
             <div className="text-center bg-opacity-50 bg-black text-white border-white border-4 py-20 p-2 rounded-t-full">
               <p className="opacity-100 font-playfair tracking-wider">
                 Terima Kasih
@@ -532,8 +457,7 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
-      <div className="fixed bottom-5 left-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
+      <div className="fixed bottom-5 right-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
           className="text-sm bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
@@ -541,7 +465,7 @@ const Halaman2 = () => {
           {isPlaying ? "Pause" : "Play"}
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
