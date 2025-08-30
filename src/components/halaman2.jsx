@@ -210,7 +210,7 @@ const Halaman2 = () => {
         style={{
           position: "fixed",
           width: "100%",
-          height: "100%",
+          height: "100vh",
           zIndex: 9999,
           pointerEvents: "none",
         }}
