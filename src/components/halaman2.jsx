@@ -468,5 +468,4 @@ const Halaman2 = () => {
     </>
   );
 };
-
 export default Halaman2;
