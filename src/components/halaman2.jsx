@@ -525,7 +525,7 @@ const Halaman2 = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-5 right-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
+      <div className="fixed bottom-5 left-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
           className="text-sm bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
