@@ -14,46 +14,125 @@ import image4 from "../assets/imag4.jpg";
 import image5 from "../assets/image5.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { db } from "../firebase";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
+import sanitizeHtml from "sanitize-html";
 
 const Halaman2 = () => {
-  // 🎯 Target waktu (ubah sesuai kebutuhanmu)
-  const targetDate = new Date("2025-06-01T09:00:00");
+  // Target waktu untuk countdown
+  const targetDate = new Date("2025-09-01T09:00:00");
+
+  // Inisialisasi AOS untuk animasi
   useEffect(() => {
     AOS.init({
-      duration: 1000, // durasi animasi (ms)
-      once: true, // hanya jalan sekali saat muncul
+      duration: 1000,
+      once: true,
     });
   }, []);
+
+  // State untuk countdown
   const [timeLeft, setTimeLeft] = useState({
     days: "00",
     hours: "00",
     minutes: "00",
     seconds: "00",
   });
+
+  // State untuk komentar
+  const [comments, setComments] = useState([]);
+  const [form, setForm] = useState({
+    name: "",
+    message: "",
+    status: "",
+  });
+
+  // State untuk galeri dan audio
   const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
   const lagu = "/assets/shanefilan.mp3";
-  function ubahgambar(params) {
-    setGambarSekarang(params);
-  }
   const [isPlaying, setIsPlaying] = useState(true);
   const [audio] = useState(
     typeof Audio !== "undefined" ? new Audio(lagu) : null
   );
 
+  // Mengambil komentar secara real-time
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "comments-09"),
+      (snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setComments(data);
+      },
+      (err) => {
+        console.error("Gagal mendengarkan komentar:", err);
+        alert("Terjadi kesalahan saat memuat komentar.");
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  // Mengirim komentar
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const sanitizedForm = {
+      name: sanitizeHtml(form.name, { allowedTags: [], allowedAttributes: {} }),
+      message: sanitizeHtml(form.message, {
+        allowedTags: [],
+        allowedAttributes: {},
+      }),
+      status: form.status,
+    };
+
+    if (
+      !sanitizedForm.name ||
+      !sanitizedForm.message ||
+      !sanitizedForm.status
+    ) {
+      return alert("Harap lengkapi semua kolom form.");
+    }
+    if (sanitizedForm.name.length > 50) {
+      return alert("Nama tidak boleh lebih dari 50 karakter.");
+    }
+    if (sanitizedForm.message.length < 5) {
+      return alert("Ucapan minimal 5 karakter.");
+    }
+
+    try {
+      await addDoc(collection(db, "comments-09"), {
+        ...sanitizedForm,
+        createdAt: new Date(),
+      });
+      setForm({ name: "", message: "", status: "" });
+      alert("Komentar berhasil dikirim!");
+    } catch (err) {
+      console.error("Gagal mengirim komentar:", err);
+      alert("Gagal mengirim komentar. Silakan coba lagi.");
+    }
+  };
+
+  // Fungsi untuk mengubah gambar galeri
+  function ubahgambar(params) {
+    setGambarSekarang(params);
+  }
+
+  // Mengontrol pemutaran audio
   useEffect(() => {
     if (!audio) return;
-
     isPlaying ? audio.play() : audio.pause();
   }, [isPlaying]);
 
   useEffect(() => {
     if (!audio) return;
-
-    // Pause lagu saat user keluar dari halaman
     return () => {
       audio.pause();
     };
-  }, []);
+  }, [audio]);
+
+  // Logika countdown
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
@@ -101,16 +180,16 @@ const Halaman2 = () => {
       />
 
       <div className="relative">
-        <img src={imagecouple} alt="" className="w-full h-auto" />
-        <div className="bg-black bg-opacity-15 absolute inset-0 "></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white  space-y-4 p-6 translate-y-24">
+        <img src={imagecouple} alt="Couple" className="w-full h-auto" />
+        <div className="bg-black bg-opacity-15 absolute inset-0"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-4 p-6 translate-y-24">
           <p className="text-xl">The Wedding of</p>
           <p className="font-allura text-5xl font-bold text-cyan-100">
             Sidqi & Aman
           </p>
           <p className="text-base mt-2">Menuju Hari Bahagia:</p>
 
-          {/* ⏳ Countdown */}
+          {/* Countdown */}
           <div className="flex space-x-4 text-center mt-2 bg-black bg-opacity-30 p-2">
             <div>
               <p className="text-2xl font-bold">{timeLeft.days}</p>
@@ -139,14 +218,15 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
+
       <div className="mt-4 mx-3 relative">
-        <img src={imagesolo1} alt="" className="w-full h-auto" />
+        <img src={imagesolo1} alt="Solo 1" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
-          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
+          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Sidqi</h1>
             <h2 className="text-lg">Sidqi Amanullah</h2>
             <div className="flex items-center bg-opacity-30 p-2 bg-gray-500 gap-2">
-              <img src={igblack} alt="" className="w-5 h-5" />
+              <img src={igblack} alt="Instagram" className="w-5 h-5" />
               <p>@sidqiaman</p>
             </div>
             <hr className="w-full border-white/30" />
@@ -156,14 +236,15 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
+
       <div className="mt-4 mx-3 relative" data-aos="zoom-in">
-        <img src={solo2} alt="" className="w-full h-auto" />
+        <img src={solo2} alt="Solo 2" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
-          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col  gap-3 mx-5 ">
+          <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Aman</h1>
             <h2 className="text-lg">Sidqia Amanull</h2>
             <div className="flex items-center gap-2 bg-gray-400 bg-opacity-30 p-2">
-              <img src={igblack} alt="" className="w-5 h-5" />
+              <img src={igblack} alt="Instagram" className="w-5 h-5" />
               <p>@amansidqi</p>
             </div>
             <hr className="w-full border-white/30" />
@@ -173,6 +254,7 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
+
       <div data-aos="fade-up">
         <p className="text-center mt-10 mx-5 text-xs">
           <q>
@@ -191,23 +273,24 @@ const Halaman2 = () => {
           <hr className="w-20 border-t border-gray-400" />
         </div>
       </div>
-      <div className="mt-10 relative" data-aos="zoom-in-left">
-        <img src={image4} alt="" className="opacity-30" />
 
+      <div className="mt-10 relative" data-aos="zoom-in-left">
+        <img src={image4} alt="Image 4" className="opacity-30" />
         <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
-          <p className="text-4xl font-extralight ">
+          <p className="text-4xl font-extralight">
             Save <p className="inline font-allura text-gray-500">The</p> Date
           </p>
           <p className="text-xs text-center mt-7">
             Dengan Memohon rahmat dan ridho Allah SWT, Kami Mengundang
-            Bapak/Ibu/Saudara/i, untuk menghindari acara pernikahan Kami.
-            insyaAllah kami akan menyelenggarakan acara pernikahan :{" "}
+            Bapak/Ibu/Saudara/i, untuk menghadiri acara pernikahan Kami.
+            InsyaAllah kami akan menyelenggarakan acara pernikahan:
           </p>
           <div className="mx-20 mt-6">
-            <img src={image5} alt="" />
+            <img src={image5} alt="Image 5" />
           </div>
         </div>
       </div>
+
       <div
         className="flex text-xl flex-col mt-10 justify-center items-center gap-8"
         data-aos="fade-up"
@@ -217,45 +300,45 @@ const Halaman2 = () => {
           Akad Nikah
         </h1>
         <div className="text-base text-center">
-          <h3 className="italic font-semibold">Minggu, 12 januari 2030</h3>
+          <h3 className="italic font-semibold">Minggu, 12 Januari 2030</h3>
           <h4>09.00 - Selesai</h4>
         </div>
         <div className="text-base text-center">
           <h3 className="bold italic font-semibold">
             Kediaman Mempelai Wanita
           </h3>
-          <h4>Perum Griya Bumi Praja, Kab. garut</h4>
+          <h4>Perum Griya Bumi Praja, Kab. Garut</h4>
         </div>
-        <div className="text-base text-center border border-black bg-slate-300 p-2 ">
-          <p className="">Google Maps</p>
+        <div className="text-base text-center border border-black bg-slate-300 p-2">
+          <p>Google Maps</p>
         </div>
-        <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col  items-center  w-full ">
-          <h1 className="font-bebas text-3xl tracking-wider">Galeri</h1>
 
+        <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col items-center w-full">
+          <h1 className="font-bebas text-3xl tracking-wider">Galeri</h1>
           <h2>Sidqi & Aman</h2>
           <div className="bg-white p-4 pb-7 mt-5" data-aos="fade-left">
-            <img src={landscape} alt="" />
+            <img src={landscape} alt="Landscape" />
           </div>
-          <div className="bg-white  p-2 mt-5" data-aos="fade-up">
-            <img src={gambarsekarang} alt="" /> {/* Ubah di sini */}
+          <div className="bg-white p-2 mt-5" data-aos="fade-up">
+            <img src={gambarsekarang} alt="Current Image" />
             <div className="gap-2 grid grid-cols-3 pt-2">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
                 className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple3}
-                alt=""
+                alt="Couple 3"
               />
               <img
                 onClick={() => ubahgambar(imagecouple4)}
                 className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple4}
-                alt=""
+                alt="Couple 4"
               />
               <img
                 onClick={() => ubahgambar(imagecouple2)}
                 className="basis-1/3 w-full h-auto object-cover"
                 src={imagecouple2}
-                alt=""
+                alt="Couple 2"
               />
             </div>
           </div>
@@ -267,52 +350,58 @@ const Halaman2 = () => {
           </div>
           <div
             data-aos="zoom-in"
-            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border border-white border-4"
+            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center  border-white border-4"
           >
-            <p>44 Comments</p>
+            <p>{comments.length} Comments</p>
             <div className="flex flex-row gap-5 mt-4">
-              <div className="flex  w-20 border rounded-lg  text-sm border-white justify-center flex-col items-center">
-                <h1 className="font-bold">16</h1>
+              <div className="flex w-20 border rounded-lg text-sm border-white justify-center flex-col items-center">
+                <h1 className="font-bold">
+                  {comments.filter((c) => c.status === "hadir").length}
+                </h1>
                 <h2>Hadir</h2>
               </div>
-              <div className="flex w-20 border  text-base rounded-lg border-white justify-center flex-col items-center">
-                <h1 className="font-bold">16</h1>
-                <h2 className="text-xs">tidak Hadir</h2>
+              <div className="flex w-20 border text-base rounded-lg border-white justify-center flex-col items-center">
+                <h1 className="font-bold">
+                  {comments.filter((c) => c.status === "tidak_hadir").length}
+                </h1>
+                <h2 className="text-xs">Tidak Hadir</h2>
               </div>
-              <div className="flex w-20 border  text-base rounded-lg border-white justify-center flex-col items-center">
-                <h1 className="font-bold">16</h1>
-                <h2 className="text-xs">masih ragu</h2>
+              <div className="flex w-20 border text-base rounded-lg border-white justify-center flex-col items-center">
+                <h1 className="font-bold">
+                  {comments.filter((c) => c.status === "masih_ragu").length}
+                </h1>
+                <h2 className="text-xs">Masih Ragu</h2>
               </div>
             </div>
             <div className="h-0.5 w-full bg-white mt-10"></div>
 
             <div>
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <input
-                  className="mt-4 p-2 w-full text-base border border-gray-300 rounded-md"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="mt-4 p-2 w-full text-base text-black border border-gray-300 rounded-md"
                   type="text"
                   placeholder="Name"
                 />
                 <textarea
-                  className="mt-4 p-2 h-20 w-full border text-base border-gray-300 rounded-md resize-none"
+                  value={form.message}
+                  onChange={(e) =>
+                    setForm({ ...form, message: e.target.value })
+                  }
+                  className="mt-4 p-2 h-20 w-full border text-base text-black border-gray-300 rounded-md resize-none"
                   placeholder="Ucapan"
                 />
                 <select
-                  className="mt-4 p-2 text-black text- w-full text-base border border-gray-300 rounded-md"
+                  value={form.status}
+                  onChange={(e) => setForm({ ...form, status: e.target.value })}
+                  className="mt-4 p-2 text-black w-full text-base border border-gray-300 rounded-md"
                   name="status"
                 >
-                  <option className="text-xs" value="">
-                    Pilih status kehadiran
-                  </option>
-                  <option value="hadir" className="text-xs">
-                    Hadir
-                  </option>
-                  <option value="tidak_hadir" className="text-xs">
-                    Tidak Hadir
-                  </option>
-                  <option value="masih_ragu" className="text-xs">
-                    Masih Ragu
-                  </option>
+                  <option value="">Pilih status kehadiran</option>
+                  <option value="hadir">Hadir</option>
+                  <option value="tidak_hadir">Tidak Hadir</option>
+                  <option value="masih_ragu">Masih Ragu</option>
                 </select>
                 <button
                   type="submit"
@@ -321,39 +410,45 @@ const Halaman2 = () => {
                   Kirim
                 </button>
               </form>
+
               <div className="h-0.5 w-full bg-white mt-10"></div>
               <div id="comments">
-                <div className="flex gap-1 mb-5 flex-col text-sm justify-start items-start pl-7 pt-4">
-                  <h1 className="font-bold">Sidqi</h1>
-                  <p>Masya Allah selamat yang berbahagia</p>
-                  <hr />
-                </div>
-                <hr />
-                <div className="flex mb-5 gap-1 flex-col text-sm justify-start items-start pl-7 pt-4">
-                  <h1 className="font-bold">Aman</h1>
-                  <p className="text-start">
-                    bagus banget semua yang berbahagia datang yak semoga lancar
-                    selalu
+                {comments.length === 0 ? (
+                  <p className="text-center text-gray-300">
+                    Belum ada komentar.
                   </p>
-                </div>
-                <hr />
+                ) : (
+                  comments
+                    .sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate())
+                    .map((c) => (
+                      <div
+                        key={c.id}
+                        className="flex gap-1 mb-5 flex-col text-sm justify-start items-start pl-7 pt-4"
+                      >
+                        <h1 className="font-bold">{sanitizeHtml(c.name)}</h1>
+                        <p>{sanitizeHtml(c.message)}</p>
+                        <p className="text-xs italic text-gray-300">
+                          {c.status}
+                        </p>
+                        <hr />
+                      </div>
+                    ))
+                )}
               </div>
-              <br />
             </div>
           </div>
-          <br />
-          <br />
         </div>
+
         <div
           data-aos="zoom-out"
           id="Gift"
           className="flex gap-5 mb-10 mx-4 justify-center items-center flex-col"
         >
-          <h1>WEDDING GIFT </h1>
+          <h1>WEDDING GIFT</h1>
           <h2 className="text-xs text-center">
-            Mungkin karena jarak, waktu ataupun keaadaan yang menghalangi untuk
-            itu hadir dalam moment bahagia kami, Silahkan klik tombol dibawah
-            untuk mengirimkan kado/hadiah.
+            Mungkin karena jarak, waktu ataupun keadaan yang menghalangi untuk
+            hadir dalam momen bahagia kami, Silakan klik tombol di bawah untuk
+            mengirimkan kado/hadiah.
           </h2>
           <h3 className="text-base">082329392901</h3>
           <button className="bg-gray-400 p-2 px-4 text-xs border border-black text-white">
@@ -366,14 +461,15 @@ const Halaman2 = () => {
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
         </div>
+
         <div
           className="relative flex justify-center items-center flex-col"
           data-aos="fade-in"
         >
-          <img className="opacity-70" src={imagecouple2} alt="" />
-          <div className="absolute -translate-y-20  w-screen px-10">
-            <div className=" text-center bg-opacity-50 bg-black text-white border-white border-4 py-20  p-2 rounded-t-full">
-              <p className="opacity-100 font-playfair tracking-wider ">
+          <img className="opacity-70" src={imagecouple2} alt="Couple 2" />
+          <div className="absolute -translate-y-20 w-screen px-10">
+            <div className="text-center bg-opacity-50 bg-black text-white border-white border-4 py-20 p-2 rounded-t-full">
+              <p className="opacity-100 font-playfair tracking-wider">
                 Terima Kasih
               </p>
               <p className="opacity-100 tracking-widest text-2xl mt-6 mb-6 font-allura">
@@ -382,16 +478,16 @@ const Halaman2 = () => {
               <p className="text-base">Kedua Mempelai & Keluarga Besar</p>
             </div>
           </div>
-          <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500  flex justify-center items-center flex-col bottom-0">
-            <img src="" alt="" />
+          <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500 flex justify-center items-center flex-col bottom-0">
             <p className="italic">Design by qi tech</p>
             <div className="flex gap-3">
-              <img src={ig} className="w-6" alt="" />
-              <img src={wa} className="w-6" alt="" />
+              <img src={ig} className="w-6" alt="Instagram" />
+              <img src={wa} className="w-6" alt="WhatsApp" />
             </div>
           </div>
         </div>
       </div>
+
       <div className="fixed bottom-5 right-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
