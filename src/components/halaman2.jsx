@@ -209,8 +209,8 @@ const Halaman2 = () => {
         wind={[-0.5, 0.5]}
         style={{
           position: "fixed",
-          width: "100vw",
-          height: "100vh",
+          width: "100%",
+          height: "100%",
           zIndex: 9999,
           pointerEvents: "none",
         }}
@@ -358,7 +358,7 @@ const Halaman2 = () => {
           </div>
           <div className="bg-white p-2 mt-5" data-aos="fade-up">
             <img src={gambarsekarang} alt="Current Image" />
-            <div className="gap-2 grid grid-cols-3 pt-2 overflow-x-auto scroll-smooth whitespace-nowrap">
+            <div className="gap-2 grid grid-cols-3 pt-2 overflow-x-auto scroll-smooth">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
                 className="basis-1/3 w-24 h-auto object-cover inline-block"
