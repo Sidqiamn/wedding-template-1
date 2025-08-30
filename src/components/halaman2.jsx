@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
 import imagecouple from "../assets/imagecouple.jpg";
 import imagecouple2 from "../assets/imagecouple2.jpg";
 import imagecouple3 from "../assets/imagecouple3.jpg";
@@ -19,34 +20,20 @@ import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import sanitizeHtml from "sanitize-html";
 
 const Halaman2 = () => {
-  // Target waktu untuk countdown
   const targetDate = new Date("2025-09-01T09:00:00");
-
-  // Inisialisasi AOS untuk animasi
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-    });
-  }, []);
-
-  // State untuk countdown
+  const [isLoading, setIsLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState({
     days: "00",
     hours: "00",
     minutes: "00",
     seconds: "00",
   });
-
-  // State untuk komentar
   const [comments, setComments] = useState([]);
   const [form, setForm] = useState({
     name: "",
     message: "",
     status: "",
   });
-
-  // State untuk galeri dan audio
   const [gambarsekarang, setGambarSekarang] = useState(imagecouple2);
   const lagu = "/assets/shanefilan.mp3";
   const [isPlaying, setIsPlaying] = useState(true);
@@ -54,7 +41,48 @@ const Halaman2 = () => {
     typeof Audio !== "undefined" ? new Audio(lagu) : null
   );
 
-  // Mengambil komentar secara real-time
+  // Preload gambar
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+
+    const images = [
+      imagecouple,
+      imagecouple2,
+      imagecouple3,
+      imagecouple4,
+      imagesolo1,
+      landscape,
+      solo2,
+      igblack,
+      ig,
+      wa,
+      image4,
+      image5,
+    ];
+
+    const preloadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => resolve();
+        img.onerror = () => reject();
+      });
+    };
+
+    Promise.all(images.map((src) => preloadImage(src)))
+      .then(() => {
+        setIsLoading(false); // Semua gambar selesai dimuat
+      })
+      .catch((err) => {
+        console.error("Gagal memuat gambar:", err);
+        setIsLoading(false); // Tetap lanjut meski gagal
+      });
+  }, []);
+
+  // Mengambil komentar dari Firebase
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "comments-09"),
@@ -74,10 +102,53 @@ const Halaman2 = () => {
     return () => unsubscribe();
   }, []);
 
+  // Logika countdown
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
+
+      if (difference <= 0) {
+        clearInterval(interval);
+        return;
+      }
+
+      const days = String(
+        Math.floor(difference / (1000 * 60 * 60 * 24))
+      ).padStart(2, "0");
+      const hours = String(
+        Math.floor((difference / (1000 * 60 * 60)) % 24)
+      ).padStart(2, "0");
+      const minutes = String(
+        Math.floor((difference / 1000 / 60) % 60)
+      ).padStart(2, "0");
+      const seconds = String(Math.floor((difference / 1000) % 60)).padStart(
+        2,
+        "0"
+      );
+
+      setTimeLeft({ days, hours, minutes, seconds });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  // Mengontrol audio
+  useEffect(() => {
+    if (!audio) return;
+    isPlaying ? audio.play() : audio.pause();
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (!audio) return;
+    return () => {
+      audio.pause();
+    };
+  }, [audio]);
+
   // Mengirim komentar
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const sanitizedForm = {
       name: sanitizeHtml(form.name, { allowedTags: [], allowedAttributes: {} }),
       message: sanitizeHtml(form.message, {
@@ -119,50 +190,16 @@ const Halaman2 = () => {
     setGambarSekarang(params);
   }
 
-  // Mengontrol pemutaran audio
-  useEffect(() => {
-    if (!audio) return;
-    isPlaying ? audio.play() : audio.pause();
-  }, [isPlaying]);
+  // Tampilkan loading jika masih memuat
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-black">
+        <ClipLoader color="#36d7b7" size={50} />
+      </div>
+    );
+  }
 
-  useEffect(() => {
-    if (!audio) return;
-    return () => {
-      audio.pause();
-    };
-  }, [audio]);
-
-  // Logika countdown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate - now;
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        return;
-      }
-
-      const days = String(
-        Math.floor(difference / (1000 * 60 * 60 * 24))
-      ).padStart(2, "0");
-      const hours = String(
-        Math.floor((difference / (1000 * 60 * 60)) % 24)
-      ).padStart(2, "0");
-      const minutes = String(
-        Math.floor((difference / 1000 / 60) % 60)
-      ).padStart(2, "0");
-      const seconds = String(Math.floor((difference / 1000) % 60)).padStart(
-        2,
-        "0"
-      );
-
-      setTimeLeft({ days, hours, minutes, seconds });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
+  // Konten utama setelah loading selesai
   return (
     <>
       <Snowfall
@@ -350,7 +387,7 @@ const Halaman2 = () => {
           </div>
           <div
             data-aos="zoom-in"
-            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center  border-white border-4"
+            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border-white border-4"
           >
             <p>{comments.length} Comments</p>
             <div className="flex flex-row gap-5 mt-4">
