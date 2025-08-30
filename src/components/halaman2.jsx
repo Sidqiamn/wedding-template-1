@@ -201,7 +201,7 @@ const Halaman2 = () => {
 
   // Konten utama setelah loading selesai
   return (
-    <div className="overflow-x-hidden">
+    <div className="">
       <Snowfall
         snowflakeCount={50}
         color="#a3e2f2"
@@ -358,22 +358,22 @@ const Halaman2 = () => {
           </div>
           <div className="bg-white p-2 mt-5" data-aos="fade-up">
             <img src={gambarsekarang} alt="Current Image" />
-            <div className="gap-2 grid grid-cols-3 pt-2">
+            <div className="gap-2 grid grid-cols-3 pt-2 overflow-x-auto scroll-smooth whitespace-nowrap">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-24 h-auto object-cover inline-block"
                 src={imagecouple3}
                 alt="Couple 3"
               />
               <img
                 onClick={() => ubahgambar(imagecouple4)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-24 h-auto object-cover inline-block"
                 src={imagecouple4}
                 alt="Couple 4"
               />
               <img
                 onClick={() => ubahgambar(imagecouple2)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-24 h-auto object-cover inline-block"
                 src={imagecouple2}
                 alt="Couple 2"
               />
