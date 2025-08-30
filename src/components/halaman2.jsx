@@ -179,7 +179,7 @@ const Halaman2 = () => {
     );
   } // Konten utama setelah loading selesai
   return (
-    <div className="">
+    <div className="max-w-full overflow-x-hidden">
       <Snowfall
         snowflakeCount={50}
         color="#a3e2f2"
@@ -194,7 +194,11 @@ const Halaman2 = () => {
         }}
       />{" "}
       <div className="relative">
-        <img src={imagecouple} alt="Couple" className="w-full h-auto" />
+        <img
+          src={imagecouple}
+          alt="Couple"
+          className="w-full h-auto max-w-full"
+        />
         <div className="bg-black bg-opacity-15 absolute inset-0"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-4 p-6 translate-y-24">
           <p className="text-xl">The Wedding of</p>
@@ -233,7 +237,11 @@ const Halaman2 = () => {
         </div>
       </div>
       <div className="mt-4 mx-3 relative">
-        <img src={imagesolo1} alt="Solo 1" className="w-full h-auto" />
+        <img
+          src={imagesolo1}
+          alt="Solo 1"
+          className="w-full h-auto max-w-full"
+        />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Sidqi</h1>
@@ -250,7 +258,7 @@ const Halaman2 = () => {
         </div>
       </div>
       <div className="mt-4 mx-3 relative" data-aos="zoom-in">
-        <img src={solo2} alt="Solo 2" className="w-full h-auto" />
+        <img src={solo2} alt="Solo 2" className="w-full h-auto max-w-full" />
         <div className="absolute bottom-4 w-full flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Aman</h1>
@@ -295,7 +303,7 @@ const Halaman2 = () => {
             Bapak/Ibu/Saudara/i, untuk menghadiri acara pernikahan Kami.
             InsyaAllah kami akan menyelenggarakan acara pernikahan:
           </p>
-          <div className="mx-20 mt-6">
+          <div className="mx-4 mt-6">
             <img src={image5} alt="Image 5" />
           </div>
         </div>
@@ -330,22 +338,22 @@ const Halaman2 = () => {
           </div>
           <div className="bg-white p-2 mt-5" data-aos="fade-up">
             <img src={gambarsekarang} alt="Current Image" />
-            <div className="gap-2 grid grid-cols-3 pt-2 overflow-x-auto scroll-smooth">
+            <div className="gap-2 grid grid-cols-3 pt-2 max-w-full overflow-x-hidden">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
-                className="basis-1/3 w-24 h-auto object-cover inline-block"
+                className="w-full h-auto object-cover"
                 src={imagecouple3}
                 alt="Couple 3"
               />
               <img
                 onClick={() => ubahgambar(imagecouple4)}
-                className="basis-1/3 w-24 h-auto object-cover inline-block"
+                className="w-full h-auto object-cover"
                 src={imagecouple4}
                 alt="Couple 4"
               />
               <img
                 onClick={() => ubahgambar(imagecouple2)}
-                className="basis-1/3 w-24 h-auto object-cover inline-block"
+                className="w-full h-auto object-cover"
                 src={imagecouple2}
                 alt="Couple 2"
               />
