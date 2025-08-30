@@ -201,7 +201,7 @@ const Halaman2 = () => {
 
   // Konten utama setelah loading selesai
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Snowfall
         snowflakeCount={50}
         color="#a3e2f2"
@@ -217,7 +217,7 @@ const Halaman2 = () => {
       />
 
       <div className="relative">
-        <img src={imagecouple} alt="Couple" className="w-full h-auto" />
+        <img src={imagecouple} alt="Couple" className="w-screen h-auto" />
         <div className="bg-black bg-opacity-15 absolute inset-0"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white space-y-4 p-6 translate-y-24">
           <p className="text-xl">The Wedding of</p>
@@ -257,8 +257,8 @@ const Halaman2 = () => {
       </div>
 
       <div className="mt-4 mx-3 relative">
-        <img src={imagesolo1} alt="Solo 1" className="w-full h-auto" />
-        <div className="absolute bottom-4 w-full flex justify-center">
+        <img src={imagesolo1} alt="Solo 1" className="w-screen h-auto" />
+        <div className="absolute bottom-4 w-screen flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Sidqi</h1>
             <h2 className="text-lg">Sidqi Amanullah</h2>
@@ -266,7 +266,7 @@ const Halaman2 = () => {
               <img src={igblack} alt="Instagram" className="w-5 h-5" />
               <p>@sidqiaman</p>
             </div>
-            <hr className="w-full border-white/30" />
+            <hr className="w-screen border-white/30" />
             <p className="italic">
               Putra dari bapak lord thanos dan queen bumi
             </p>
@@ -275,8 +275,8 @@ const Halaman2 = () => {
       </div>
 
       <div className="mt-4 mx-3 relative" data-aos="zoom-in">
-        <img src={solo2} alt="Solo 2" className="w-full h-auto" />
-        <div className="absolute bottom-4 w-full flex justify-center">
+        <img src={solo2} alt="Solo 2" className="w-screen h-auto" />
+        <div className="absolute bottom-4 w-screen flex justify-center">
           <div className="bg-gray-300 bg-opacity-40 text-black px-4 py-3 rounded flex flex-col gap-3 mx-5">
             <h1 className="text-4xl font-lora">Aman</h1>
             <h2 className="text-lg">Sidqia Amanull</h2>
@@ -284,7 +284,7 @@ const Halaman2 = () => {
               <img src={igblack} alt="Instagram" className="w-5 h-5" />
               <p>@amansidqi</p>
             </div>
-            <hr className="w-full border-white/30" />
+            <hr className="w-screen border-white/30" />
             <p className="italic">
               Putra dari bapak lord thanos dan queen bumi
             </p>
@@ -313,7 +313,7 @@ const Halaman2 = () => {
 
       <div className="mt-10 relative" data-aos="zoom-in-left">
         <img src={image4} alt="Image 4" className="opacity-30" />
-        <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
+        <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-screen">
           <p className="text-4xl font-extralight">
             Save <p className="inline font-allura text-gray-500">The</p> Date
           </p>
@@ -350,7 +350,7 @@ const Halaman2 = () => {
           <p>Google Maps</p>
         </div>
 
-        <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col items-center w-full">
+        <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col items-center w-screen">
           <h1 className="font-bebas text-3xl tracking-wider">Galeri</h1>
           <h2>Sidqi & Aman</h2>
           <div className="bg-white p-4 pb-7 mt-5" data-aos="fade-left">
@@ -361,25 +361,25 @@ const Halaman2 = () => {
             <div className="gap-2 grid grid-cols-3 pt-2">
               <img
                 onClick={() => ubahgambar(imagecouple3)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-screen h-auto object-cover"
                 src={imagecouple3}
                 alt="Couple 3"
               />
               <img
                 onClick={() => ubahgambar(imagecouple4)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-screen h-auto object-cover"
                 src={imagecouple4}
                 alt="Couple 4"
               />
               <img
                 onClick={() => ubahgambar(imagecouple2)}
-                className="basis-1/3 w-full h-auto object-cover"
+                className="basis-1/3 w-screen h-auto object-cover"
                 src={imagecouple2}
                 alt="Couple 2"
               />
             </div>
           </div>
-          <div className="h-0.5 w-full bg-white mt-10"></div>
+          <div className="h-0.5 w-screen bg-white mt-10"></div>
 
           <div className="mt-10 text-center">
             <h1>RSVP & WISHES</h1>
@@ -387,7 +387,7 @@ const Halaman2 = () => {
           </div>
           <div
             data-aos="zoom-in"
-            className="mt-10 p-2 text-center text-white bg-gray-500 w-full flex justify-center flex-col items-center border-white border-4"
+            className="mt-10 p-2 text-center text-white bg-gray-500 w-screen flex justify-center flex-col items-center border-white border-4"
           >
             <p>{comments.length} Comments</p>
             <div className="flex flex-row gap-5 mt-4">
@@ -410,14 +410,14 @@ const Halaman2 = () => {
                 <h2 className="text-xs">Masih Ragu</h2>
               </div>
             </div>
-            <div className="h-0.5 w-full bg-white mt-10"></div>
+            <div className="h-0.5 w-screen bg-white mt-10"></div>
 
             <div>
               <form onSubmit={handleSubmit}>
                 <input
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="mt-4 p-2 w-full text-base text-black border border-gray-300 rounded-md"
+                  className="mt-4 p-2 w-screen text-base text-black border border-gray-300 rounded-md"
                   type="text"
                   placeholder="Name"
                 />
@@ -426,13 +426,13 @@ const Halaman2 = () => {
                   onChange={(e) =>
                     setForm({ ...form, message: e.target.value })
                   }
-                  className="mt-4 p-2 h-20 w-full border text-base text-black border-gray-300 rounded-md resize-none"
+                  className="mt-4 p-2 h-20 w-screen border text-base text-black border-gray-300 rounded-md resize-none"
                   placeholder="Ucapan"
                 />
                 <select
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value })}
-                  className="mt-4 p-2 text-black w-full text-base border border-gray-300 rounded-md"
+                  className="mt-4 p-2 text-black w-screen text-base border border-gray-300 rounded-md"
                   name="status"
                 >
                   <option value="">Pilih status kehadiran</option>
@@ -442,13 +442,13 @@ const Halaman2 = () => {
                 </select>
                 <button
                   type="submit"
-                  className="mt-4 p-1 font-bold text-lg rounded-md w-full bg-gray-400 text-white"
+                  className="mt-4 p-1 font-bold text-lg rounded-md w-screen bg-gray-400 text-white"
                 >
                   Kirim
                 </button>
               </form>
 
-              <div className="h-0.5 w-full bg-white mt-10"></div>
+              <div className="h-0.5 w-screen bg-white mt-10"></div>
               <div id="comments">
                 {comments.length === 0 ? (
                   <p className="text-center text-gray-300">
@@ -515,7 +515,7 @@ const Halaman2 = () => {
               <p className="text-base">Kedua Mempelai & Keluarga Besar</p>
             </div>
           </div>
-          <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500 flex justify-center items-center flex-col bottom-0">
+          <div className="absolute h-60 gap-5 translate-y-32 w-screen text-white bg-gray-500 flex justify-center items-center flex-col bottom-0">
             <p className="italic">Design by qi tech</p>
             <div className="flex gap-3">
               <img src={ig} className="w-6" alt="Instagram" />
@@ -533,7 +533,7 @@ const Halaman2 = () => {
           {isPlaying ? "Pause" : "Play"}
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
