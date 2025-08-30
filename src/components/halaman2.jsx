@@ -504,7 +504,7 @@ const Halaman2 = () => {
           data-aos="fade-in"
         >
           <img className="opacity-70" src={imagecouple2} alt="Couple 2" />
-          <div className="absolute -translate-y-20 w-screen px-10">
+          <div className="absolute -translate-y-20 w-full px-10">
             <div className="text-center bg-opacity-50 bg-black text-white border-white border-4 py-20 p-2 rounded-t-full">
               <p className="opacity-100 font-playfair tracking-wider">
                 Terima Kasih
