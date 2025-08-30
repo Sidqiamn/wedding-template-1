@@ -18,7 +18,6 @@ import "aos/dist/aos.css";
 import { db } from "../firebase";
 import { collection, addDoc, onSnapshot } from "firebase/firestore";
 import sanitizeHtml from "sanitize-html";
-
 const Halaman2 = () => {
   const targetDate = new Date("2025-09-01T09:00:00");
   const [isLoading, setIsLoading] = useState(true);
@@ -39,15 +38,12 @@ const Halaman2 = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [audio] = useState(
     typeof Audio !== "undefined" ? new Audio(lagu) : null
-  );
-
-  // Preload gambar
+  ); // Preload gambar
   useEffect(() => {
     AOS.init({
       duration: 1000,
       once: true,
     });
-
     const images = [
       imagecouple,
       imagecouple2,
@@ -80,9 +76,7 @@ const Halaman2 = () => {
         console.error("Gagal memuat gambar:", err);
         setIsLoading(false); // Tetap lanjut meski gagal
       });
-  }, []);
-
-  // Mengambil komentar dari Firebase
+  }, []); // Mengambil komentar dari Firebase
   useEffect(() => {
     const unsubscribe = onSnapshot(
       collection(db, "comments-09"),
@@ -98,16 +92,12 @@ const Halaman2 = () => {
         alert("Terjadi kesalahan saat memuat komentar.");
       }
     );
-
     return () => unsubscribe();
-  }, []);
-
-  // Logika countdown
+  }, []); // Logika countdown
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
       const difference = targetDate - now;
-
       if (difference <= 0) {
         clearInterval(interval);
         return;
@@ -131,22 +121,17 @@ const Halaman2 = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [targetDate]);
-
-  // Mengontrol audio
+  }, [targetDate]); // Mengontrol audio
   useEffect(() => {
     if (!audio) return;
     isPlaying ? audio.play() : audio.pause();
   }, [isPlaying]);
-
   useEffect(() => {
     if (!audio) return;
     return () => {
       audio.pause();
     };
-  }, [audio]);
-
-  // Mengirim komentar
+  }, [audio]); // Mengirim komentar
   const handleSubmit = async (e) => {
     e.preventDefault();
     const sanitizedForm = {
@@ -157,7 +142,6 @@ const Halaman2 = () => {
       }),
       status: form.status,
     };
-
     if (
       !sanitizedForm.name ||
       !sanitizedForm.message ||
@@ -183,23 +167,17 @@ const Halaman2 = () => {
       console.error("Gagal mengirim komentar:", err);
       alert("Gagal mengirim komentar. Silakan coba lagi.");
     }
-  };
-
-  // Fungsi untuk mengubah gambar galeri
+  }; // Fungsi untuk mengubah gambar galeri
   function ubahgambar(params) {
     setGambarSekarang(params);
-  }
-
-  // Tampilkan loading jika masih memuat
+  } // Tampilkan loading jika masih memuat
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-black">
         <ClipLoader color="#36d7b7" size={50} />
       </div>
     );
-  }
-
-  // Konten utama setelah loading selesai
+  } // Konten utama setelah loading selesai
   return (
     <div className="">
       <Snowfall
@@ -214,8 +192,7 @@ const Halaman2 = () => {
           zIndex: 9999,
           pointerEvents: "none",
         }}
-      />
-
+      />{" "}
       <div className="relative">
         <img src={imagecouple} alt="Couple" className="w-full h-auto" />
         <div className="bg-black bg-opacity-15 absolute inset-0"></div>
@@ -255,7 +232,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div className="mt-4 mx-3 relative">
         <img src={imagesolo1} alt="Solo 1" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
@@ -273,7 +249,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div className="mt-4 mx-3 relative" data-aos="zoom-in">
         <img src={solo2} alt="Solo 2" className="w-full h-auto" />
         <div className="absolute bottom-4 w-full flex justify-center">
@@ -291,7 +266,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div data-aos="fade-up">
         <p className="text-center mt-10 mx-5 text-xs">
           <q>
@@ -310,7 +284,6 @@ const Halaman2 = () => {
           <hr className="w-20 border-t border-gray-400" />
         </div>
       </div>
-
       <div className="mt-10 relative" data-aos="zoom-in-left">
         <img src={image4} alt="Image 4" className="opacity-30" />
         <div className="absolute top-0 flex mt-10 justify-center items-center flex-col w-full">
@@ -327,7 +300,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div
         className="flex text-xl flex-col mt-10 justify-center items-center gap-8"
         data-aos="fade-up"
@@ -524,7 +496,6 @@ const Halaman2 = () => {
           </div>
         </div>
       </div>
-
       <div className="fixed bottom-5 left-5 z-[9999] bg-white shadow-lg p-3 rounded-full flex items-center gap-2">
         <button
           onClick={() => setIsPlaying(!isPlaying)}
@@ -536,5 +507,4 @@ const Halaman2 = () => {
     </div>
   );
 };
-
 export default Halaman2;
