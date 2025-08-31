@@ -4,6 +4,7 @@ import imagecouple from "../assets/imagecouple.jpg";
 import imagecouple2 from "../assets/imagecouple2.jpg";
 import imagecouple3 from "../assets/imagecouple3.jpg";
 import imagecouple4 from "../assets/imagecouple4.jpg";
+import imagecoupleMerupakan from "../assets/merupakansuatukebahgiaan.png";
 import imagesolo1 from "../assets/imagesolo1.jpg";
 import landscape from "../assets/landscape.jpg";
 import solo2 from "../assets/solo2.jpg";
@@ -57,6 +58,7 @@ const Halaman2 = () => {
       wa,
       image4,
       image5,
+      imagecoupleMerupakan,
     ];
 
     const preloadImage = (src) => {
@@ -371,12 +373,6 @@ const Halaman2 = () => {
           >
             <p>{comments.length} Comments</p>
             <div className="flex flex-row gap-5 mt-4">
-              <div className="flex w-20 border rounded-lg text-sm border-white justify-center flex-col items-center">
-                <h1 className="font-bold">
-                  {comments.filter((c) => c.status === "hadir").length}
-                </h1>
-                <h2>Hadir</h2>
-              </div>
               <div className="flex w-20 border text-base rounded-lg border-white justify-center flex-col items-center">
                 <h1 className="font-bold">
                   {comments.filter((c) => c.status === "tidak_hadir").length}
@@ -459,7 +455,7 @@ const Halaman2 = () => {
         <div
           data-aos="zoom-out"
           id="Gift"
-          className="flex gap-5 mb-10 mx-4 justify-center items-center flex-col"
+          className="flex gap-5  mx-4 justify-center items-center flex-col"
         >
           <h1>WEDDING GIFT</h1>
           <h2 className="text-xs text-center">
@@ -478,7 +474,13 @@ const Halaman2 = () => {
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
         </div>
-
+        <div className="flex justify-center items-center relative">
+          <img src={imagecoupleMerupakan} className="" alt="" />
+          <h4 className=" absolute -translate-y-5 text-gray-100 text-center text-base font-playfair mx-7">
+            Merupakan Suatu Kehormatan dan kebahagiaan bagi kami, apabila
+            Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
+          </h4>
+        </div>
         <div
           className="relative flex justify-center items-center flex-col"
           data-aos="fade-in"
