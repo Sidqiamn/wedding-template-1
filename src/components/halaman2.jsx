@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import imagecouple from "../assets/imagecouple.jpg";
+import Lottie from "lottie-react";
+import animationData from "../animation/birds.json";
 import imagecouple2 from "../assets/imagecouple2.jpg";
 import imagecouple3 from "../assets/imagecouple3.jpg";
 import imagecouple4 from "../assets/imagecouple4.jpg";
@@ -14,6 +16,7 @@ import ig from "../assets/ig.png";
 import wa from "../assets/wa.png";
 import image4 from "../assets/imag4.jpg";
 import image5 from "../assets/image5.png";
+import gunungatas from "../assets/gunung.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { db } from "../firebase";
@@ -311,25 +314,37 @@ const Halaman2 = () => {
         </div>
       </div>
       <div
-        className="flex text-xl flex-col mt-36 justify-center items-center gap-8"
+        className="flex  text-xl flex-col mt-36 justify-center items-center gap-8"
         data-aos="fade-right"
       >
-        <h1 className="font-playfair text-2xl">Wedding Event</h1>
-        <h1 className="text-gray-500 font-bold tracking-wider font-lora">
-          Akad Nikah
-        </h1>
-        <div className="text-base text-center">
-          <h3 className="italic font-semibold">Minggu, 12 Januari 2030</h3>
-          <h4>09.00 - Selesai</h4>
-        </div>
-        <div className="text-base text-center">
-          <h3 className="bold italic font-semibold">
-            Kediaman Mempelai Wanita
-          </h3>
-          <h4>Perum Griya Bumi Praja, Kab. Garut</h4>
-        </div>
-        <div className="text-base text-center border border-black bg-slate-300 p-2">
-          <p>Google Maps</p>
+        <div className="justify-center flex-col items-center flex relative gap-8 my-20">
+          <div className="absolute -translate-y-28">
+            <Lottie
+              animationData={animationData}
+              loop={true}
+              style={{ width: 300, height: 300 }}
+            />
+          </div>
+          <img src={gunungatas} className="translate-y-[114px]" alt="" />
+          <div className="absolute justify-center flex-col items-center flex gap-8 ">
+            <h1 className="font-playfair text-2xl">Wedding Event</h1>
+            <h1 className="text-gray-500 font-bold tracking-wider font-lora">
+              Akad Nikah
+            </h1>
+            <div className="text-base text-center">
+              <h3 className="italic font-semibold">Minggu, 12 Januari 2030</h3>
+              <h4>09.00 - Selesai</h4>
+            </div>
+            <div className="text-base text-center">
+              <h3 className="bold italic font-semibold">
+                Kediaman Mempelai Wanita
+              </h3>
+              <h4>Perum Griya Bumi Praja, Kab. Garut</h4>
+            </div>
+            <div className="text-base text-center border border-black bg-slate-300 p-2">
+              <p>Google Maps</p>
+            </div>
+          </div>
         </div>
 
         <div className="bg-gray-300 text-black px-5 pt-5 flex flex-col items-center w-full">
@@ -474,7 +489,10 @@ const Halaman2 = () => {
           </button>
           <p className="text-xs">A/n. Sidqi Ganteng</p>
         </div>
-        <div className="flex justify-center items-center relative">
+        <div
+          className="flex justify-center items-center relative"
+          data-aos="fade-in"
+        >
           <img src={imagecoupleMerupakan} className="" alt="" />
           <h4 className=" absolute -translate-y-5 text-gray-100 text-center text-base font-playfair mx-7">
             Merupakan Suatu Kehormatan dan kebahagiaan bagi kami, apabila
@@ -498,7 +516,7 @@ const Halaman2 = () => {
             </div>
           </div>
           <div className="absolute h-60 gap-5 translate-y-32 w-full text-white bg-gray-500 flex justify-center items-center flex-col bottom-0">
-            <p className="italic">Design by qi tech</p>
+            <p className="italic">Design by Blury tech</p>
             <div className="flex gap-3">
               <img src={ig} className="w-6" alt="Instagram" />
               <img src={wa} className="w-6" alt="WhatsApp" />
