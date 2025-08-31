@@ -310,7 +310,7 @@ const Halaman2 = () => {
       </div>
       <div
         className="flex text-xl flex-col mt-36 justify-center items-center gap-8"
-        data-aos="fade-up"
+        data-aos="fade-right"
       >
         <h1 className="font-playfair text-2xl">Wedding Event</h1>
         <h1 className="text-gray-500 font-bold tracking-wider font-lora">
